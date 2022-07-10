@@ -5,8 +5,8 @@ profile ekleyin.(5 Puan)
 3. Aşağıdaki kurallara göre bir film öneri uygulaması yazın. (90 Puan)
 
 ### **Teknolojiler;**
-* Min Java8
-* Spring Boot
+* Min Java8+
+* Spring Boot+
 * Restfull
 * MySQL - Postgre - Mongo(Her servis farklı database kullanabilir)
 * RabbitMQ
@@ -15,10 +15,10 @@ profile ekleyin.(5 Puan)
 
 * Kullanıcı sisteme kayıt olup, login olabilmelidir.(Login işlemi için email ve şifre bilgileri
 gereklidir.)
-* Kullanıcı şifresi istediğiniz bir hashing algoritmasıyla database kaydedilmelidir.
+* Kullanıcı şifresi istediğiniz bir hashing algoritmasıyla database kaydedilmelidir.+
 * Kullanıcılar sisteme film ekleyebilir ve bu filmler herkes tarafından görülebilir.
 * Kullanıcı kendi eklediği filmleri görebilmeli.(Profil sayfası gibi düşünün)
-* Kullanıcı şifresini ve ismini değiştirebilir.
+* Kullanıcı şifresini ve ismini değiştirebilir.+
 * Ücretli üye olmayan kullanıcılar sadece 3 film ekleyebilir.
 * Ücretli üye olmayan kullanıcılar filmlere yorum yapamaz.
 * Sisteme yeni bir film girildiğinde kullanıcılara email gider.
