@@ -12,40 +12,40 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration
-@EnableWebSecurity
-@AllArgsConstructor
+//@Configuration
+//@EnableWebSecurity
+//@AllArgsConstructor
 public class WebSecurityConfig  {
-    private final UserService userService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-        AuthenticationManager authenticationManager = http
-                .getSharedObject(AuthenticationManagerBuilder.class)
-                .authenticationProvider(authenticationProvider())
-                .build();
-
-        return http.httpBasic().and()
-                .authorizeHttpRequests().antMatchers("/register/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .authenticationManager(authenticationManager)
-                .csrf().disable()
-                .formLogin().disable().build();
-
-    }
-
-
-
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setPasswordEncoder(bCryptPasswordEncoder);
-        provider.setUserDetailsService(userService);
-        return provider;
-    }
+//    private final UserService userService;
+//    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+//
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//
+//        AuthenticationManager authenticationManager = http
+//                .getSharedObject(AuthenticationManagerBuilder.class)
+//                .authenticationProvider(authenticationProvider())
+//                .build();
+//
+//        return http.httpBasic().and()
+//                .authorizeHttpRequests().antMatchers("/register/**").permitAll()
+//                .anyRequest().authenticated()
+//                .and()
+//                .authenticationManager(authenticationManager)
+//                .csrf().disable()
+//                .formLogin().disable().build();
+//
+//    }
+//
+//
+//
+//    @Bean
+//    public DaoAuthenticationProvider authenticationProvider() {
+//        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+//        provider.setPasswordEncoder(bCryptPasswordEncoder);
+//        provider.setUserDetailsService(userService);
+//        return provider;
+//    }
 
 
 }

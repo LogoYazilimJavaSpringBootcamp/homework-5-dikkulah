@@ -1,8 +1,6 @@
 package com.movie.model;
 
-import com.movie.model.person.Actor;
-import com.movie.model.person.Director;
-import com.movie.model.person.Writer;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +8,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,6 +18,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "movies")
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,15 +35,16 @@ public class Movie {
     private Set<Genre> genres = new HashSet<>();
     @ManyToMany
     @JoinTable(name = "movie_directors", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "director_id"))
-    private Set<Director> directors = new HashSet<>();
+    private Set<Person> directors = new HashSet<>();
     @ManyToMany
     @JoinTable(name = "movie_writers", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "writer_id"))
-    private Set<Writer> writers = new HashSet<>();
+    private Set<Person> writers = new HashSet<>();
     @ManyToMany
     @JoinTable(name = "movie_actors", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "actor_id"))
-    private Set<Actor> actors = new HashSet<>();
+    private Set<Person> actors = new HashSet<>();
 
-
+    @OneToMany(mappedBy = "movie")
+    private List<Comment> comments = new ArrayList<>();
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, updatable = false)
     private User user;
