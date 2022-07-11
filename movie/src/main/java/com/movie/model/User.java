@@ -19,7 +19,7 @@ import java.util.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "Users")
-public class User /*implements UserDetails*/ {
+public class User  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -48,41 +48,6 @@ public class User /*implements UserDetails*/ {
 
     @OneToMany(mappedBy = "user")
     private List<Comment> comments = new ArrayList<>();
-
- /*   @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority(userType.name()));
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return !locked;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }*/
 
 
 }
