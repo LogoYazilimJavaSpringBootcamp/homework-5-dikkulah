@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -15,13 +16,12 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @Table(name = "genres")
 public class Genre {
-    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
-    @NotBlank
-    private String name;
-
+    private @Id Long id;
+    private @NotBlank String name;
+    @ManyToMany(mappedBy = "genres")
+    private Set<Movie> movies;
 
 
 }

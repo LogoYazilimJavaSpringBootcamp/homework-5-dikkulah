@@ -7,6 +7,5 @@ import java.io.Serializable;
 
 @Data
 public class GenreDto implements Serializable {
-    @NotBlank
-    private final String name;
+    private @NotBlank String name;
 }

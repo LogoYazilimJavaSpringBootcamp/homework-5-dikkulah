@@ -11,7 +11,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,35 +20,24 @@ import java.util.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "Users")
-public class User  {
-    @Id
+public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
-    @Email
-    @NotBlank
+    private @Id Long id;
     @Column(unique = true)
-    private String email;
-    @NotBlank
-    private String firstName;
-    @NotBlank
-    private String lastName;
-    @NotBlank
-    private String password;
+    private @Email @NotBlank String email;
+    private @NotBlank String firstName;
+    private @NotBlank String lastName;
+    private @NotBlank String password;
+    private Boolean isEnable;
     @Enumerated(EnumType.STRING)
     private UserType userType = UserType.USER;
-
     @Enumerated(EnumType.STRING)
     private MembershipType membershipType = MembershipType.FREE;
     private LocalDate expiringTime = LocalDate.now();
-    private Boolean enabled = true;
-    private Boolean locked = false;
-
+    private Integer addingMovieRight;
     @OneToMany(mappedBy = "user")
     private List<Movie> movies = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user")
-    private List<Comment> comments = new ArrayList<>();
 
 
 }

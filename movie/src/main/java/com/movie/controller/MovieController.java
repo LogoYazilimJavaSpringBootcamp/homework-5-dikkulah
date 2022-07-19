@@ -1,15 +1,17 @@
 package com.movie.controller;
 
+
 import com.movie.dto.MovieDto;
 import com.movie.service.MovieService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("movie")
 public class MovieController {
 
@@ -17,19 +19,17 @@ public class MovieController {
 
     @GetMapping
     public ResponseEntity<List<MovieDto>> getAllMovies() {
-        return ResponseEntity.ok().body(movieService.getAllMovies());
+        return new ResponseEntity<>(movieService.getAllMovies(), HttpStatus.ACCEPTED);
     }
     @GetMapping("{title}")
     public ResponseEntity<MovieDto> getMovieByTitle(@PathVariable String title) {
         return ResponseEntity.ok().body(movieService.getMovieByTitle(title));
     }
-    @PostMapping
-    public ResponseEntity<MovieDto> addMovie(@RequestBody MovieDto movieDto) {
-        return ResponseEntity.ok().body(movieService.addMovie(movieDto));
+    @PostMapping("{email}")
+    public ResponseEntity<MovieDto> addMovie(@RequestBody MovieDto request,@PathVariable String email) {
+        return ResponseEntity.ok().body(movieService.addMovie(request,email));
     }
-    @PutMapping
-    public ResponseEntity<MovieDto> updateMovie(@RequestBody MovieDto movieDto) {
-        return ResponseEntity.ok().body(movieService.addMovie(movieDto));
-    }
+
+
 
 }

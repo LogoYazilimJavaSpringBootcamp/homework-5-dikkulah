@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Data
 public class CommentDto implements Serializable {
-    private final String text;
-    private final UserDto user;
-    private final MovieDto movie;
+    private String text;
+    private UserDto user;
+    private MovieDto movie;
 }

@@ -1,5 +1,6 @@
 package com.movie.dto;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.movie.model.type.MembershipType;
 import com.movie.model.type.UserType;
 import lombok.Data;
@@ -8,26 +9,28 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDate;
-
+import java.util.ArrayList;
 import java.util.List;
 
 
 @Data
 public class UserDto implements Serializable {
+    private Long id;
     @Email
-    @NotBlank
-    private final String email;
-    @NotBlank
-    private final String firstName;
-    @NotBlank
-    private final String lastName;
-    @NotBlank
-    private final String password;
-    private final UserType userType;
-    private final MembershipType membershipType;
-    private final LocalDate expiringTime;
-    private final Boolean enabled;
-    private final Boolean locked;
-    private final List<MovieDto> movies;
-    private final List<CommentDto> comments;
+    private @NotBlank String email;
+    private String firstName;
+    private String lastName;
+    private @NotBlank String password;
+    private String newPassword;
+    private UserType userType;
+    private Boolean isEnable;
+    private MembershipType membershipType;
+    private LocalDate expiringTime;
+    private Integer addingMovieRight;
+    @JsonManagedReference
+    private List<MovieDto> movies = new ArrayList<>();
+    private List<CommentDto> comments = new ArrayList<>();
+    private PaymentDto payment;
+
+
 }

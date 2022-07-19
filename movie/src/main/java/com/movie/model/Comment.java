@@ -15,13 +15,12 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @Table(name = "comments")
 public class Comment {
-    @Id
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private @Id Long id;
     @Lob
-    @NotBlank
-    private String text;
+    private @NotBlank String text;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
