@@ -27,8 +27,9 @@ public class UserDto implements Serializable {
     private MembershipType membershipType;
     private LocalDate expiringTime;
     private Integer addingMovieRight;
-    @JsonManagedReference
+    @JsonManagedReference(value = "user1")
     private List<MovieDto> movies = new ArrayList<>();
+    @JsonManagedReference(value = "user")
     private List<CommentDto> comments = new ArrayList<>();
     private PaymentDto payment;
 

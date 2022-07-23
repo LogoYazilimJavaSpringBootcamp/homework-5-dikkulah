@@ -42,13 +42,25 @@ public class MovieService {
         return modelMapper.map(movieRepository.save(modelMapper.map(movieDto, Movie.class)), MovieDto.class);
     }
 
-    public MovieDto getMovieByTitle(String title) {
-        return modelMapper.map(movieRepository.findByTitleContains(title), MovieDto.class);
+    public MovieDto getMovieByTitle(Long id) {
+        return modelMapper.map(movieRepository.findById(id), MovieDto.class);
     }
 
 
     public List<MovieDto> getAllMovies() {
         return mapList(movieRepository.findAll(), MovieDto.class);
+    }
+
+    public MovieDto addWriter(MovieDto request) {
+            return null;
+    }
+
+    public MovieDto addDirector(MovieDto request) {
+            return null;
+    }
+
+    public MovieDto addActor(MovieDto request) {
+        return null;
     }
 
     <S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
@@ -57,5 +69,4 @@ public class MovieService {
                 .map(element -> modelMapper.map(element, targetClass))
                 .toList();
     }
-
 }

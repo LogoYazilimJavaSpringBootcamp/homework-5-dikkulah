@@ -38,6 +38,8 @@ public class User {
     private Integer addingMovieRight;
     @OneToMany(mappedBy = "user")
     private List<Movie> movies = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments = new ArrayList<>();
 
 
 }

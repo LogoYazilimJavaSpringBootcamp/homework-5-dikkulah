@@ -1,6 +1,5 @@
 package com.movie.controller;
 
-import com.movie.dto.GenreDto;
 import com.movie.dto.PersonDto;
 import com.movie.service.PersonService;
 import lombok.RequiredArgsConstructor;
@@ -22,19 +21,14 @@ public class PersonController {
     public ResponseEntity<PersonDto> addPerson(@RequestBody PersonDto request){
         return ResponseEntity.ok().body(personService.addPerson(request));
     }
-    @PostMapping("addAll")
-    public ResponseEntity<List<PersonDto>> addAllPersons(@RequestBody List<PersonDto> request){
-        return ResponseEntity.ok().body(personService.addAllPersons(request));
+
+
+
+    @GetMapping("{id}")
+    public ResponseEntity<PersonDto> getPersonsByName(@PathVariable Long id){
+        return ResponseEntity.ok().body(personService.getPersonById(id));
     }
 
-    @GetMapping("{name}")
-    public ResponseEntity<List<PersonDto>> getPersonsByName(@PathVariable String name){
-        return ResponseEntity.ok().body(personService.getPersonsByName(name));
-    }
-    @GetMapping("/jobs/{job}")
-    public ResponseEntity<List<PersonDto>> getPersonsByJobs(@PathVariable String job){
-        return ResponseEntity.ok().body(personService.getPersonsByName(job));
-    }
     @GetMapping
     public ResponseEntity<List<PersonDto>> getAllPersons(){
         return ResponseEntity.ok().body(personService.getAllPersons());

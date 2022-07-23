@@ -21,15 +21,31 @@ public class MovieController {
     public ResponseEntity<List<MovieDto>> getAllMovies() {
         return new ResponseEntity<>(movieService.getAllMovies(), HttpStatus.ACCEPTED);
     }
-    @GetMapping("{title}")
-    public ResponseEntity<MovieDto> getMovieByTitle(@PathVariable String title) {
-        return ResponseEntity.ok().body(movieService.getMovieByTitle(title));
-    }
-    @PostMapping("{email}")
-    public ResponseEntity<MovieDto> addMovie(@RequestBody MovieDto request,@PathVariable String email) {
-        return ResponseEntity.ok().body(movieService.addMovie(request,email));
+
+    @GetMapping("{id}")
+    public ResponseEntity<MovieDto> getMovieById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(movieService.getMovieByTitle(id));
     }
 
+    @PostMapping("{email}")
+    public ResponseEntity<MovieDto> addMovie(@RequestBody MovieDto request, @PathVariable String email) {
+        return ResponseEntity.ok().body(movieService.addMovie(request, email));
+    }
+
+    @PostMapping("writer/{movieId}")
+    public ResponseEntity<MovieDto> addWriterToMovie(@RequestBody MovieDto request, @PathVariable Long movieId) {
+        return ResponseEntity.ok().body(movieService.addWriter(request));
+    }
+
+    @PostMapping("director/{movieId}")
+    public ResponseEntity<MovieDto> addDirectorToMovie(@RequestBody MovieDto request, @PathVariable Long movieId) {
+        return ResponseEntity.ok().body(movieService.addDirector(request));
+    }
+
+    @PostMapping("actor/{movieId}")
+    public ResponseEntity<MovieDto> addActorToMovie(@RequestBody MovieDto request, @PathVariable Long movieId) {
+        return ResponseEntity.ok().body(movieService.addActor(request));
+    }
 
 
 }

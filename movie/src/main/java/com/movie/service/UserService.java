@@ -70,6 +70,9 @@ public class UserService {
             paymentClient.createPayment(paymentDto);
             log.info("user kaydedildi.");
         }
+        /*
+          ödeme bilgilerini payment cliente kaydeder.
+         */
         PaymentDto returnedPayment = paymentClient.getPaymentByEmail(paymentDto.getUserEmail()).getBody();
         UserDto savedUserDto = modelMapper.map(userRepository.save(user), UserDto.class);
         savedUserDto.setPayment(returnedPayment);
@@ -125,6 +128,10 @@ public class UserService {
         return list;
     }
 
+    /**
+     * @param email
+     * @return payment clientten ödeme bilgilerini alır ve userı döndürür
+     */
     public UserDto getUser(String email) {
         UserDto userDto = modelMapper.map(userRepository.findByEmail(email).orElseThrow(), UserDto.class);
         userDto.setPayment(paymentClient.getPaymentByEmail(email).getBody());

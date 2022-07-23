@@ -18,22 +18,30 @@ public class PersonService {
     private final ModelMapper modelMapper;
 
     public PersonDto addPerson(PersonDto request) {
-        return modelMapper.map(personRepository.save(modelMapper.map(request, Person.class)),PersonDto.class);
+        return modelMapper.map(personRepository.save(modelMapper.map(request, Person.class)), PersonDto.class);
     }
 
-    public List<PersonDto> addAllPersons(List<PersonDto> request) {
-        return null;
-    }
-
-    public List<PersonDto> getPersonsByName(String name) {
-        return null;
+    public PersonDto getPersonById(Long id) {
+        var person = personRepository.findById(id).orElseThrow();
+        return modelMapper.map(person, PersonDto.class);
     }
 
     public List<PersonDto> getAllPersons() {
-            return null;
+        return mapList(personRepository.findAll(), PersonDto.class);
     }
 
     public HttpStatus deleteById(Long id) {
-        return null;
+        personRepository.findById(id).ifPresent(personRepository::delete);
+        return HttpStatus.ACCEPTED;
     }
+
+
+
+    public <S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
+        return source
+                .stream()
+                .map(element -> modelMapper.map(element, targetClass))
+                .toList();
+    }
+
 }

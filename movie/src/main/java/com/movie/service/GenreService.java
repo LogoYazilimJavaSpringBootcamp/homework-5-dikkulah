@@ -1,12 +1,13 @@
 package com.movie.service;
 
 import com.movie.dto.GenreDto;
+import com.movie.dto.MovieDto;
 import com.movie.model.Genre;
 import com.movie.repository.GenreRepository;
+import com.movie.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ import java.util.List;
 @Log4j2
 public class GenreService {
     private final GenreRepository genreRepository;
+    private final MovieRepository movieRepository;
     private final ModelMapper modelMapper;
 
     public GenreDto addGenre(GenreDto request) {
@@ -31,8 +33,8 @@ public class GenreService {
         return list;
     }
 
-    public GenreDto getGenreByName(String name) {
-        return modelMapper.map(genreRepository.findByName(name), GenreDto.class);
+    public GenreDto getGenreById(Long id) {
+        return modelMapper.map(genreRepository.findById(id), GenreDto.class);
     }
 
     public List<GenreDto> getAllGenres() {
@@ -50,6 +52,14 @@ public class GenreService {
             genreRepository.save(genre);
         });
         return modelMapper.map(genreRepository.findByName(newName), GenreDto.class);
+    }
+
+    public MovieDto addGenreToMovie(GenreDto request, Long movieId) {
+        var movie = movieRepository.findById(movieId).orElseThrow();
+        movie.getGenres().add(modelMapper.map(request, Genre.class));
+        log.info("ulaştı.");
+        return modelMapper.map(movieRepository.save(movie), MovieDto.class);
+
     }
 
 

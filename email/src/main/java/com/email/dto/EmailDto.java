@@ -1,4 +1,4 @@
-package com.email;
+package com.email.dto;
 
 import lombok.Getter;
 import lombok.Setter;

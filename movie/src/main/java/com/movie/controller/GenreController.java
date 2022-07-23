@@ -1,6 +1,7 @@
 package com.movie.controller;
 
 import com.movie.dto.GenreDto;
+import com.movie.dto.MovieDto;
 import com.movie.service.GenreService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -21,25 +22,29 @@ public class GenreController {
     public ResponseEntity<GenreDto> addGenre(@RequestBody GenreDto request){
         return ResponseEntity.ok().body(genreService.addGenre(request));
     }
-    @PostMapping("addAll")
+    @PostMapping("/addAll")
     public ResponseEntity<List<GenreDto>> addAllGenre(@RequestBody List<GenreDto> request){
         return ResponseEntity.ok().body(genreService.addAllGenres(request));
     }
+    @PostMapping("/toMovie/{movieId}")
+    public ResponseEntity<MovieDto> addGenreToMovie(@RequestBody GenreDto request,@PathVariable Long movieId){
+        return ResponseEntity.ok().body(genreService.addGenreToMovie(request,movieId));
+    }
 
-    @GetMapping("{name}")
-    public ResponseEntity<GenreDto> getGenreByName(@PathVariable String name){
-        return ResponseEntity.ok().body(genreService.getGenreByName(name));
+    @GetMapping("/{id}")
+    public ResponseEntity<GenreDto> getGenreById(@PathVariable Long id){
+        return ResponseEntity.ok().body(genreService.getGenreById(id));
     }
     @GetMapping
     public ResponseEntity<List<GenreDto>> getAllGenres(){
         return ResponseEntity.ok().body(genreService.getAllGenres());
     }
 
-    @DeleteMapping("{name}")
+    @DeleteMapping("/{name}")
     public ResponseEntity<HttpStatus> deleteByName(@PathVariable String name){
         return ResponseEntity.ok().body(genreService.deleteByName(name));
     }
-    @PutMapping("{id}/{newName}")
+    @PutMapping("/{id}/{newName}")
     public ResponseEntity<GenreDto> updateGenreById(@PathVariable Long id, @PathVariable String newName){
         return ResponseEntity.ok().body(genreService.updateNameById(id,newName));
     }
