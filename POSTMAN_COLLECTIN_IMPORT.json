@@ -1,0 +1,700 @@
+{
+	"info": {
+		"_postman_id": "ea49a22a-8b33-4f77-ba6f-07114df8a981",
+		"name": "5.ÖDEV",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18806477"
+	},
+	"item": [
+		{
+			"name": "USER",
+			"item": [
+				{
+					"name": "Hepsini Kaydet",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"email\": \"ufuk99@gmail.com\",\n        \"firstName\": \"ufuk\",\n        \"lastName\": \"dikkülah\",\n        \"password\": \"123456\",\n        \"membershipType\": \"FREE\",\n        \"payment\": {\n            \"cardNumber\": 123456,\n            \"securityCode\": 539,\n            \"currency\": \"TRY\"\n        }\n    },\n    {\n        \"email\": \"ufuk101@gmail.com\",\n        \"firstName\": \"ufuk\",\n        \"lastName\": \"dikkülah\",\n        \"password\": \"123456\",\n        \"membershipType\": \"FREE\",\n        \"payment\": {\n            \"cardNumber\": 123456,\n            \"securityCode\": 539,\n            \"currency\": \"TRY\"\n        }\n    },\n    {\n        \"email\": \"ufuk1011@gmail.com\",\n        \"firstName\": \"ufuk\",\n        \"lastName\": \"dikkülah\",\n        \"password\": \"123456\",\n        \"membershipType\": \"ONE_MONTH\",\n        \"payment\": {\n            \"cardNumber\": 123456,\n            \"securityCode\": 539,\n            \"currency\": \"TRY\"\n        }\n    },\n    {\n        \"email\": \"ufuk1012@gmail.com\",\n        \"firstName\": \"ufuk\",\n        \"lastName\": \"dikkülah\",\n        \"password\": \"123456\",\n        \"membershipType\": \"THREE_MONTH\",\n        \"payment\": {\n            \"cardNumber\": 123456,\n            \"securityCode\": 539,\n            \"currency\": \"TRY\"\n        }\n    },\n    {\n        \"email\": \"ufuk1013@gmail.com\",\n        \"firstName\": \"ufuk\",\n        \"lastName\": \"dikkülah\",\n        \"password\": \"123456\",\n        \"membershipType\": \"SIX_MONTH\",\n        \"payment\": {\n            \"cardNumber\": 123456,\n            \"securityCode\": 539,\n            \"currency\": \"TRY\"\n        }\n    },\n    {\n        \"email\": \"ufuk1014@gmail.com\",\n        \"firstName\": \"ufuk\",\n        \"lastName\": \"dikkülah\",\n        \"password\": \"123456\",\n        \"membershipType\": \"YEAR\",\n        \"payment\": {\n            \"cardNumber\": 123456,\n            \"securityCode\": 539,\n            \"currency\": \"TRY\"\n        }\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/user/registerAll",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"registerAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Kaydet",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"ufuk50@gmail.com\",\n    \"firstName\": \"ufuk\",\n    \"lastName\": \"dikkülah\",\n    \"password\": \"123456\",\n    \"membershipType\": \"YEAR\",\n    \"payment\": {\n        \"cardNumber\": 123456,\n        \"securityCode\": 539,\n        \"currency\": \"TRY\"\n    },\n    \"movies\": [],\n    \"comments\": []\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/user/register",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sahte login şifre email konrol ediyor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"ufuk5@gmail.com\",\n    \"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/user/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AD-SOYAD-ŞİFRE UPDATE",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"ufuk5@gmail.com\",\n    \"firstName\": \"ahmet\",\n    \"lastName\": \"dikkülah\",\n    \"password\": \"123456\",\n    \"newPassword\":\"1234567\",\n    \"membershipType\": \"FREE\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/user/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tüm userlar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/user",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User bul",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/user/ufuk46@gmail.com",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"ufuk46@gmail.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get comments of user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/user/comments/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"comments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usrerın Eklediği filmler",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/user/ufuk46@gmail.com/123456",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"ufuk46@gmail.com",
+								"123456"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "MOVİE",
+			"item": [
+				{
+					"name": "Film ekle",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"19 angry man\",\n    \"year\": 2012,\n    \"genres\": [],\n    \"directors\": [],\n    \"writers\": [],\n    \"actors\": []\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/movie/ufuk6@gmail.com",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"movie",
+								"ufuk6@gmail.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filmleri Listele",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/movie/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"movie",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Id ile film listele",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/movie/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"movie",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add writer to movie",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 6,\n    \"firstName\": \"Stanley \",\n    \"lastName\": \"Kubrick\",\n    \"jobs\": [\n        \"WRITER\",\n        \"DIRECTOR\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/movie/writer/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"movie",
+								"writer",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add director to movie",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 6,\n    \"firstName\": \"Stanley \",\n    \"lastName\": \"Kubrick\",\n    \"jobs\": [\n        \"WRITER\",\n        \"DIRECTOR\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/movie/director/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"movie",
+								"director",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add actor to movie",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"firstName\": \"Leonardo2\",\n    \"lastName\": \"Di Caprio\",\n    \"jobs\": [\n        \"ACTOR\",\n        \"DIRECTOR\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/movie/actor/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"movie",
+								"actor",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Comments of movie",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/movie/comments/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"movie",
+								"comments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Genres",
+			"item": [
+				{
+					"name": "Save all Genre",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"name\": \"Comedy\"\n    },\n    {\n        \"name\": \"Fantasy\"\n    },\n    {\n        \"name\": \"Crime\"\n    },\n    {\n        \"name\": \"Drama\"\n    },\n    {\n        \"name\": \"Music\"\n    },\n    {\n        \"name\": \"Adventure\"\n    },\n    {\n        \"name\": \"Thriller\"\n    },\n    {\n        \"name\": \"Animation\"\n    },\n    {\n        \"name\": \"Family\"\n    },\n    {\n        \"name\": \"Mystery\"\n    },\n    {\n        \"name\": \"Biography\"\n    },\n    {\n        \"name\": \"Action\"\n    },\n    {\n        \"name\": \"Film-Noir\"\n    },\n    {\n        \"name\": \"Romance\"\n    },\n    {\n        \"name\": \"Sci-Fi\"\n    },\n    {\n        \"name\": \"War\"\n    },\n    {\n        \"name\": \"Western\"\n    },\n    {\n        \"name\": \"Horror\"\n    },\n    {\n        \"name\": \"Musical\"\n    },\n    {\n        \"name\": \"Sport\"\n    },\n    {\n        \"name\": \"History\"\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/genre/addAll",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"genre",
+								"addAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All genres",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/genre",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"genre"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/genre/Action",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"genre",
+								"Action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add genre",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"komedi\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/genre",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"genre"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete By Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/genre/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"genre",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update by ıd",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/genre/15/drama",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"genre",
+								"15",
+								"drama"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Genre To Movie /{movieId}",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 15,\n    \"name\": \"drama\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/genre/toMovie/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"genre",
+								"toMovie",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Person",
+			"item": [
+				{
+					"name": "Add Person",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Stanley \",\n    \"lastName\": \"Kubrick\",\n    \"jobs\": [\n        \"WRITER\",\n        \"DIRECTOR\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/person/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"person",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Person",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/person/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"person",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Persons",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/person/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"person",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get person",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/person/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"person",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comment",
+			"item": [
+				{
+					"name": "Save Comment /UserId/MovieId",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"text\":\"yorummmm\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/comment/4/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"comment",
+								"4",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All comment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/comment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"comment"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "5",
+			"value": "as"
+		}
+	]
+}

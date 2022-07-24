@@ -16,12 +16,13 @@ public class PaymentService {
     private final ModelMapper modelMapper;
 
     public PaymentDto createPayment(PaymentDto request) {
-        log.info(request.toString());
+        log.info("Ödeme servisine ulaştı");
         paymentRepository.save(modelMapper.map(request, Payment.class));
         return request;
     }
 
     public PaymentDto getPaymentByEmail(String email) {
+        log.info("Ödeme görütnüleme servisine ulaştı");
         return modelMapper.map(paymentRepository.findByUserEmail(email), PaymentDto.class);
     }
 }

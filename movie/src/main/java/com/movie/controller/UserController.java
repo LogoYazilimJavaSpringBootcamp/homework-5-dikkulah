@@ -1,5 +1,7 @@
 package com.movie.controller;
 
+import com.movie.dto.CommentDto;
+import com.movie.dto.MovieDto;
 import com.movie.dto.UserDto;
 import com.movie.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +35,10 @@ public class UserController {
     public ResponseEntity<String> login(@RequestBody UserDto request)  {
         return ResponseEntity.ok().body(userService.login(request));
     }
+    @GetMapping("comments/{userId}")
+    public ResponseEntity<List<CommentDto>> getCommentsOfUser(@PathVariable Long userId){
+        return ResponseEntity.ok().body(userService.getCommentsOfUser(userId));
+    }
 
     @GetMapping
     public ResponseEntity<List<UserDto>> getAllUsers(){
@@ -43,6 +49,11 @@ public class UserController {
     public ResponseEntity<UserDto> getUser(@PathVariable String email){
 
         return ResponseEntity.ok().body(userService.getUser(email));
+    }
+    @GetMapping("/{email}/{password}")
+    public ResponseEntity<List<MovieDto>> getMyMovies(@PathVariable String email, @PathVariable String password){
+
+        return ResponseEntity.ok().body(userService.getMyMovies(email,password));
     }
 
 }

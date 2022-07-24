@@ -16,7 +16,7 @@ public class EmailListener {
 
     @RabbitListener(queues = "movieAdvisor.email")
     public void emailListener(EmailDto emailDto) {
-        log.info(emailDto.getTo()+"  "+ emailDto.getFrom()+" mailli kullanıcı "+emailDto.getTitle()+" isimli filmi ekledi.");
+        log.info(emailDto.getFrom()+" mailli kullanıcı "+emailDto.getTitle()+" isimli filmi ekledi ve "+emailDto.getTo()+"kullanıcısına mail gönderildi.");
         emailRepository.save(emailDto);
     }
 }

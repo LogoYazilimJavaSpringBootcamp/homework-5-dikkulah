@@ -18,7 +18,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("{userId}/{movieId}")
-    public ResponseEntity<CommentDto> addComment(@RequestBody CommentDto request, @PathVariable Long userId, @PathVariable Long movieId){
+    public ResponseEntity<List<CommentDto>> addComment(@RequestBody CommentDto request, @PathVariable Long userId, @PathVariable Long movieId){
         return ResponseEntity.ok().body(commentService.addComment(request,userId,movieId));
 
     }
@@ -26,4 +26,5 @@ public class CommentController {
     public ResponseEntity<List<CommentDto>> getAllComments(){
         return ResponseEntity.ok().body(commentService.getAllComments());
     }
+
 }

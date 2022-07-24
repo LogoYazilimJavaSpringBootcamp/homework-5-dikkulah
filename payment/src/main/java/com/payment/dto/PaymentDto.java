@@ -14,6 +14,7 @@ public class PaymentDto implements Serializable {
     @Id
     @Column(name = "id", nullable = false)
     private Long id;
+    @Column(unique = true)
     private String userEmail;
     private String cardNumber;
     private Integer securityCode;

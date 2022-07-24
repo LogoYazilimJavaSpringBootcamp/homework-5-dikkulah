@@ -13,7 +13,6 @@ import java.util.Set;
 public class GenreDto implements Serializable {
     private @Id Long id;
     private @NotBlank String name;
-    @JsonBackReference(value = "genre")
-    private Set<Movie> movies;
+
 
 }

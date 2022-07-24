@@ -4,16 +4,18 @@ import com.movie.dto.CommentDto;
 import com.movie.dto.MovieDto;
 import com.movie.dto.UserDto;
 import com.movie.model.Comment;
-import com.movie.model.Movie;
-import com.movie.model.User;
+import com.movie.model.type.MembershipType;
 import com.movie.repository.CommentRepository;
 import com.movie.repository.MovieRepository;
 import com.movie.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,23 +27,28 @@ public class CommentService {
     private final MovieRepository movieRepository;
     private final ModelMapper modelMapper;
 
-    public CommentDto addComment(CommentDto request, Long userId, Long movieId) {
-        User user = userRepository.findById(userId).orElseThrow();
-        Movie movie = movieRepository.findById(movieId).orElseThrow();
-        request.setUser(modelMapper.map(user, UserDto.class));
-        request.setMovie(modelMapper.map(movie, MovieDto.class));
-        Comment savedComment= commentRepository.save(modelMapper.map(request, Comment.class));
-        user.getComments().add(savedComment);
-        userRepository.save(user);
-        movie.getComments().add(savedComment);
-        movieRepository.save(movie);
-
-        return modelMapper.map(commentRepository.findById(savedComment.getId()), CommentDto.class);
+    public List<CommentDto> addComment(CommentDto request, Long userId, Long movieId) {
+        userRepository.findById(userId).ifPresent(user -> {
+            if (user.getMembershipType() != MembershipType.FREE) {
+                movieRepository.findById(movieId).ifPresent(movie -> {
+                    request.setMovie(modelMapper.map(movie, MovieDto.class));
+                    request.setUser(modelMapper.map(user, UserDto.class));
+                    Comment comment = commentRepository.save(modelMapper.map(request, Comment.class));
+                    user.getComments().add(comment);
+                    movie.getComments().add(comment);
+                    userRepository.save(user);
+                    movieRepository.save(movie);
+                });
+            }else throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"SADECE ÜCRETLİ KULLANICILAR YORUM YAPABİLİR");
+        });
+        return mapList(movieRepository.findById(movieId).orElseThrow().getComments(),CommentDto.class);
     }
 
     public List<CommentDto> getAllComments() {
         return mapList(commentRepository.findAll(),CommentDto.class);
     }
+
+
     <S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
         return source
                 .stream()

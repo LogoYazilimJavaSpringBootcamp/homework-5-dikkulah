@@ -1,6 +1,7 @@
 package com.movie.dto;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.movie.model.type.PersonType;
 import lombok.Data;
@@ -17,7 +18,5 @@ public class PersonDto implements Serializable {
     private @Id Long id;
     private String firstName;
     private String lastName;
-    @JsonBackReference(value = "person")
-    private Set<MovieDto> movies = new HashSet<>();
     private List<PersonType> jobs = new ArrayList<>();
 }

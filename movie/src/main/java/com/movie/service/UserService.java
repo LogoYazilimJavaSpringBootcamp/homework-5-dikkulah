@@ -3,14 +3,20 @@ package com.movie.service;
 
 import com.google.common.hash.Hashing;
 import com.movie.client.PaymentClient;
+import com.movie.dto.CommentDto;
+import com.movie.dto.MovieDto;
 import com.movie.dto.PaymentDto;
 import com.movie.dto.UserDto;
+import com.movie.model.Comment;
+import com.movie.model.Movie;
 import com.movie.model.User;
 import com.movie.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
@@ -112,8 +118,12 @@ public class UserService {
      * @return tüm userları dtoya çevirip listeler ve geri döndürür.
      */
     public List<UserDto> getAllUsers() {
-        var list= mapList(userRepository.findAll(), UserDto.class);
-        list.forEach(userDto -> userDto.setPayment(paymentClient.getPaymentByEmail(userDto.getEmail()).getBody()));
+        var list = mapList(userRepository.findAll(), UserDto.class);
+        list.forEach(userDto -> {
+            if (paymentClient.getPaymentByEmail(userDto.getEmail()).getBody() != null) {
+                userDto.setPayment(paymentClient.getPaymentByEmail(userDto.getEmail()).getBody());
+            }
+        });
         return list;
     }
 
@@ -138,12 +148,30 @@ public class UserService {
         return userDto;
     }
 
+    public List<CommentDto> getCommentsOfUser(Long userId) {
+        List<Comment> comments = new ArrayList<>();
+        log.info("asdasd");
+        userRepository.findById(userId).ifPresent(user -> comments.addAll(user.getComments()));
+        return mapList(comments, CommentDto.class);
+    }
+
+    public List<MovieDto> getMyMovies(String email, String password) {
+        List<Movie> movies = new ArrayList<>();
+        userRepository.findByEmail(email).ifPresent(user -> {
+            if (Objects.equals(user.getPassword(), Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString())) {
+                movies.addAll(user.getMovies());
+            } else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ŞİFRE YADA KULLANICI ADI YANLIŞ");
+        });
+        return mapList(movies, MovieDto.class);
+
+
+    }
+
     public <S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
         return source
                 .stream()
                 .map(element -> modelMapper.map(element, targetClass))
                 .toList();
     }
-
 
 }

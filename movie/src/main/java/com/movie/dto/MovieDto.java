@@ -18,13 +18,9 @@ public class MovieDto implements Serializable {
     private Integer year;
     @JsonManagedReference(value = "movie")
     private List<CommentDto> comments = new ArrayList<>();
-    @JsonManagedReference(value = "genre")
     private Set<GenreDto> genres = new HashSet<>();
-    @JsonManagedReference(value = "person")
     private Set<PersonDto> directors = new HashSet<>();
-    @JsonManagedReference(value = "person")
     private Set<PersonDto> writers = new HashSet<>();
-    @JsonManagedReference(value = "person")
     private Set<PersonDto> actors = new HashSet<>();
     @JsonBackReference(value = "user1")
     private UserDto user;
