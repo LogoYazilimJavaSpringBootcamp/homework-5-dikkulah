@@ -10,6 +10,7 @@ import com.movie.repository.MovieRepository;
 import com.movie.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Log4j2
+@Slf4j
 public class CommentService {
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
@@ -38,17 +39,22 @@ public class CommentService {
                     movie.getComments().add(comment);
                     userRepository.save(user);
                     movieRepository.save(movie);
+                    log.info("yorum kaydedildi. "+request);
                 });
-            }else throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"SADECE ÜCRETLİ KULLANICILAR YORUM YAPABİLİR");
+            }else {
+                log.info("yorum kaydedilmedi.");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "SADECE ÜCRETLİ KULLANICILAR YORUM YAPABİLİR");
+            }
         });
         return mapList(movieRepository.findById(movieId).orElseThrow().getComments(),CommentDto.class);
     }
 
     public List<CommentDto> getAllComments() {
+        log.info("tüm yorumlar listelendi.");
         return mapList(commentRepository.findAll(),CommentDto.class);
     }
 
-
+    // Liste için Dto-Entity dönüşümü.
     <S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
         return source
                 .stream()

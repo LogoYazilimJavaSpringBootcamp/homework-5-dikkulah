@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @Slf4j
+
 public class RabbitMQConfig {
     @Value("${spring.rabbitmq.template.default-receive-queue}")
     String queueName;

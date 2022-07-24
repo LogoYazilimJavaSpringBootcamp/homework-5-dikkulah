@@ -17,25 +17,30 @@ import java.util.List;
 public class PersonController {
     private final PersonService personService;
 
+    // kişi kaydet
     @PostMapping
     public ResponseEntity<PersonDto> addPerson(@RequestBody PersonDto request){
+        log.info("add person controller");
         return ResponseEntity.ok().body(personService.addPerson(request));
     }
 
-
-
+    //id ile kişi getir
     @GetMapping("{id}")
-    public ResponseEntity<PersonDto> getPersonsByName(@PathVariable Long id){
+    public ResponseEntity<PersonDto> getPersonsById(@PathVariable Long id) {
+        log.info("get person by ıd controller");
         return ResponseEntity.ok().body(personService.getPersonById(id));
     }
 
+    //tümünü listele
     @GetMapping
     public ResponseEntity<List<PersonDto>> getAllPersons(){
+        log.info("get all persons controller");
         return ResponseEntity.ok().body(personService.getAllPersons());
     }
-
+    // id ile kii silme
     @DeleteMapping("{id}")
     public ResponseEntity<HttpStatus> deleteById(@PathVariable Long id){
+        log.info("delete person by id controller");
         return ResponseEntity.ok().body(personService.deleteById(id));
     }
 

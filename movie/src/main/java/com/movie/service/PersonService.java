@@ -36,7 +36,7 @@ public class PersonService {
     }
 
 
-
+    // Liste için Dto-Entity dönüşümü.
     public <S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
         return source
                 .stream()

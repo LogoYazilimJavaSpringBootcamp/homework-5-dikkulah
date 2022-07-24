@@ -33,15 +33,6 @@ public class MovieService {
 
     public MovieDto addMovie(MovieDto movieDto, String email) {
         //her kullanıcıya mail gönderir.
-        userRepository.findAll().forEach(user -> {
-            EmailDto emailDto = new EmailDto();
-            emailDto.setFrom(email);
-            emailDto.setDescription(movieDto.getTitle() + " isimli film eklendi.");
-            emailDto.setTo(user.getEmail());
-            emailDto.setTitle(movieDto.getTitle());
-            emailDto.setSendingTime(LocalDateTime.now().toString());
-            amqpTemplate.convertAndSend(emailDto);
-        });
         // 3 ADET FİLM KONTROLÜ
         var userDto = modelMapper.map(userRepository.findByEmail(email).orElseThrow(), UserDto.class);
         Movie movie;
@@ -50,22 +41,36 @@ public class MovieService {
             movie = movieRepository.save(modelMapper.map(movieDto, Movie.class));
             userDto.setAddingMovieRight(userDto.getAddingMovieRight() - 1);
             userRepository.save(modelMapper.map(userDto, User.class));
+            log.info("Free üyelerin film ekleme hakkı kontrol edildi.");
         } else if (userDto.getMembershipType() != MembershipType.FREE) {
             movieDto.setUser(userDto);
             movie = movieRepository.save(modelMapper.map(movieDto, Movie.class));
             userRepository.save(modelMapper.map(userDto, User.class));
+            log.info("Ücretli üyelerin film eklemesi sağlandı.");
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"FİLM EKLEME HAKKINIZ BİTTİ VEYA HATA OLUŞTU");
         }
+        userRepository.findAll().forEach(user -> {
+            EmailDto emailDto = new EmailDto();
+            emailDto.setFrom(email);
+            emailDto.setDescription(movieDto.getTitle() + " isimli film eklendi.");
+            emailDto.setTo(user.getEmail());
+            emailDto.setTitle(movieDto.getTitle());
+            emailDto.setSendingTime(LocalDateTime.now().toString());
+            amqpTemplate.convertAndSend(emailDto);
+            log.info("her user için email gönderildi.");
+        });
         return modelMapper.map(movie, MovieDto.class);
     }
 
-    public MovieDto getMovieByTitle(Long id) {
+    public MovieDto getMovieById(Long id) {
+        log.info("isime göre film listelendi.");
         return modelMapper.map(movieRepository.findById(id), MovieDto.class);
     }
 
 
     public List<MovieDto> getAllMovies() {
+        log.info("tüm filmler listelendi.");
         return mapList(movieRepository.findAll(), MovieDto.class);
     }
 
@@ -75,6 +80,7 @@ public class MovieService {
             if (request.getJobs().contains(PersonType.WRITER)) {
                 movie.getWriters().add(modelMapper.map(request, Person.class));
                 movieRepository.save(movie);
+                log.info("filme yazar eklendi");
             } else throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"YAZAR EKELENEMEDİ");
         });
         return modelMapper.map(movieRepository.findById(movieId).orElseThrow(), MovieDto.class);
@@ -85,6 +91,7 @@ public class MovieService {
             if (request.getJobs().contains(PersonType.DIRECTOR)) {
                 movie.getDirectors().add(modelMapper.map(request, Person.class));
                 movieRepository.save(movie);
+                log.info("filme yönetmen eklendi.");
             } else throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"YÖNETMEN EKLENEMEDİ");
         });
         return modelMapper.map(movieRepository.findById(movieId).orElseThrow(), MovieDto.class);
@@ -96,21 +103,24 @@ public class MovieService {
             if (request.getJobs().contains(PersonType.ACTOR)) {
                 movie.getActors().add(modelMapper.map(request, Person.class));
                 movieRepository.save(movie);
+                log.info("filme aktör eklendi");
             } else throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"OYUNCU EKLENEMEDİ");
         });
         return modelMapper.map(movieRepository.findById(movieId).orElseThrow(), MovieDto.class);
     }
 
+    public List<CommentDto> getCommentsOfMovie(Long movieId) {
+        List<Comment> comments = new ArrayList<>();
+        movieRepository.findById(movieId).ifPresent(movie -> comments.addAll(movie.getComments()));
+        log.info("filme yorum eklendi.");
+        return mapList(comments,CommentDto.class);
+    }
+
+    // Liste için Dto-Entity dönüşümü.
     <S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
         return source
                 .stream()
                 .map(element -> modelMapper.map(element, targetClass))
                 .toList();
-    }
-
-    public List<CommentDto> getCommentsOfMovie(Long movieId) {
-        List<Comment> comments = new ArrayList<>();
-        movieRepository.findById(movieId).ifPresent(movie -> comments.addAll(movie.getComments()));
-        return mapList(comments,CommentDto.class);
     }
 }

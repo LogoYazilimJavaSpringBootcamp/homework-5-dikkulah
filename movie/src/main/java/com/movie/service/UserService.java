@@ -68,13 +68,14 @@ public class UserService {
                     paymentDto.setAmount(BigDecimal.valueOf(500));
                 }
             }
+            log.info("Userın üyelik tipine göre fiyat ,sona erme tarihi ve ekleme hakkı tanımlandı.");
             paymentDto.setUserEmail(user.getEmail());
             paymentDto.setPaymentTime(LocalDateTime.now());
             paymentDto.setCardNumber(request.getPayment().getCardNumber());
             paymentDto.setCurrency(request.getPayment().getCurrency());
             paymentDto.setSecurityCode(request.getPayment().getSecurityCode());
             paymentClient.createPayment(paymentDto);
-            log.info("user kaydedildi.");
+            log.info("ödeme yapıldı");
         }
         /*
           ödeme bilgilerini payment cliente kaydeder.
@@ -82,6 +83,7 @@ public class UserService {
         PaymentDto returnedPayment = paymentClient.getPaymentByEmail(paymentDto.getUserEmail()).getBody();
         UserDto savedUserDto = modelMapper.map(userRepository.save(user), UserDto.class);
         savedUserDto.setPayment(returnedPayment);
+        log.info("user kaydedildi.");
         return savedUserDto;
     }
 
@@ -96,7 +98,7 @@ public class UserService {
             if (request.getLastName() != null) foundUser.setLastName(request.getLastName());
             if (request.getNewPassword() != null)
                 foundUser.setPassword(Hashing.sha256().hashString(request.getNewPassword(), StandardCharsets.UTF_8).toString());
-            log.info("Password changed.");
+            log.info("Password changed and full name updated");
         } else {
             log.info("Password not chanced");
         }
@@ -110,6 +112,7 @@ public class UserService {
     public String login(UserDto request) {
         var user = userRepository.findByEmail(request.getEmail()).orElseThrow();
         if (Objects.equals(user.getPassword(), Hashing.sha256().hashString(request.getPassword(), StandardCharsets.UTF_8).toString())) {
+            log.info("oturum aıldı.");
             return "LOGGED IN";
         } else return "ERROR";
     }
@@ -123,6 +126,7 @@ public class UserService {
             if (paymentClient.getPaymentByEmail(userDto.getEmail()).getBody() != null) {
                 userDto.setPayment(paymentClient.getPaymentByEmail(userDto.getEmail()).getBody());
             }
+            log.info("tüm filmler listelendi.");
         });
         return list;
     }
@@ -135,6 +139,7 @@ public class UserService {
     public List<UserDto> registerAll(List<UserDto> request) {
         List<UserDto> list = new ArrayList<>();
         request.forEach(userDto -> list.add(register(userDto)));
+        log.info("tüm userlar kaydedildi");
         return list;
     }
 
@@ -145,6 +150,7 @@ public class UserService {
     public UserDto getUser(String email) {
         UserDto userDto = modelMapper.map(userRepository.findByEmail(email).orElseThrow(), UserDto.class);
         userDto.setPayment(paymentClient.getPaymentByEmail(email).getBody());
+        log.info("user listelendi");
         return userDto;
     }
 
@@ -152,6 +158,7 @@ public class UserService {
         List<Comment> comments = new ArrayList<>();
         log.info("asdasd");
         userRepository.findById(userId).ifPresent(user -> comments.addAll(user.getComments()));
+        log.info("userın yorumları listelendi.");
         return mapList(comments, CommentDto.class);
     }
 
@@ -160,13 +167,14 @@ public class UserService {
         userRepository.findByEmail(email).ifPresent(user -> {
             if (Objects.equals(user.getPassword(), Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString())) {
                 movies.addAll(user.getMovies());
+                log.info("userın filmleri listelendi.");
             } else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ŞİFRE YADA KULLANICI ADI YANLIŞ");
         });
         return mapList(movies, MovieDto.class);
 
 
     }
-
+    // Liste için Dto-Entity dönüşümü.
     public <S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
         return source
                 .stream()

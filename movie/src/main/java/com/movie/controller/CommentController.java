@@ -17,13 +17,17 @@ import java.util.List;
 public class CommentController {
     private final CommentService commentService;
 
+    //comment ekleme
     @PostMapping("{userId}/{movieId}")
     public ResponseEntity<List<CommentDto>> addComment(@RequestBody CommentDto request, @PathVariable Long userId, @PathVariable Long movieId){
+        log.info("add comment controller");
         return ResponseEntity.ok().body(commentService.addComment(request,userId,movieId));
 
     }
+    //tüm commentler
     @GetMapping
     public ResponseEntity<List<CommentDto>> getAllComments(){
+        log.info("get all comments controller");
         return ResponseEntity.ok().body(commentService.getAllComments());
     }
 
