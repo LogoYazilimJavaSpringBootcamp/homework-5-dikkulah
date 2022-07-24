@@ -51,7 +51,7 @@
 * RabbitMQ(email servisinde kullanıldı)
 
 ### **Gereksinimler;**
-
+*  KULLANILAN POSTMAN SORGULARI POSTMAN_COLLECTIN_IMPORT.json dosyasından import edilebilir.
 * Kullanıcı sisteme kayıt olup, login olabilmelidir.(Login işlemi için email ve şifre bilgileri
 gereklidir.)++
 * Kullanıcı şifresi istediğiniz bir hashing algoritmasıyla database kaydedilmelidir.+
